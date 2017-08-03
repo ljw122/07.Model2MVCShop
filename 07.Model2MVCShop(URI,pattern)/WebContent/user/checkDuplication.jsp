@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%-- user에서 실행 후 중복체크시 root로 이동.. --%>
 
-<c:set var="changeURI" value="${empty result ? \"../\":\"\" }" />
 <html>
 <head>
 <title>아이디 중복 확인</title>
 
-<link rel="stylesheet" href="${changeURI }css/admin.css" type="text/css">
+<link rel="stylesheet" href="../css/admin.css" type="text/css">
 
 <script type="text/javascript">
 <!--
@@ -22,7 +22,7 @@ function fncCheckDuplication() {
 	// Form 유효성 검증
 	if(document.detailForm.userId.value != null && document.detailForm.userId.value.length >0) {
 		
-	    document.detailForm.action='../checkDuplication.do';
+	    document.detailForm.action='checkDuplication';
 	    document.detailForm.submit();
 	}else {
 		alert('아이디는 반드시 입력하셔야 합니다.');
@@ -50,9 +50,9 @@ function fncUseId() {
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
-			<img src="${changeURI }images/ct_ttl_img01.gif" width="15" height="37"/>
+			<img src="../images/ct_ttl_img01.gif" width="15" height="37"/>
 		</td>
-		<td background="${changeURI }images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
+		<td background="../images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">ID중복확인</td>
@@ -61,7 +61,7 @@ function fncUseId() {
 			</table>
 		</td>
 		<td width="12" height="37">
-			<img src="${changeURI }images/ct_ttl_img03.gif" width="12" height="37"/>
+			<img src="../images/ct_ttl_img03.gif" width="12" height="37"/>
 		</td>
 	</tr>
 </table>
@@ -74,7 +74,7 @@ function fncUseId() {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:3px;">
 				<tr>
 					<td width="8" style="padding-bottom:3px;">
-						<img src="${changeURI }images/ct_bot_ttl01.gif" width="4" height="7">
+						<img src="../images/ct_bot_ttl01.gif" width="4" height="7">
 					</td>
 					<td class="ct_ttl02">
 						<c:if test="${!empty result }">
@@ -86,7 +86,7 @@ function fncUseId() {
 		</td>
 	</tr>
 	<tr>
-		<td background="${changeURI }images/ct_line_ttl.gif" height="1"></td>
+		<td background="../images/ct_line_ttl.gif" height="1"></td>
 	</tr>
 </table>
 <!-- 검색결과 끝 -->
@@ -98,7 +98,7 @@ function fncUseId() {
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">
-			아이디 <img src="${changeURI }images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
+			아이디 <img src="../images/ct_icon_red.gif" width="3" height="3" align="absmiddle">
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
@@ -112,14 +112,14 @@ function fncUseId() {
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<td width="4" height="21">
-									<img src="${changeURI }images/ct_btng01.gif" width="4" height="21">
+									<img src="../images/ct_btng01.gif" width="4" height="21">
 								</td>
-								<td 	align="center" background="${changeURI }images/ct_btng02.gif" class="ct_btn" 
+								<td 	align="center" background="../images/ct_btng02.gif" class="ct_btn" 
 										style="padding-top:3px;">
 									<a href="javascript:fncCheckDuplication();">중복확인</a>
 								</td>
 								<td width="4" height="21">
-									<img src="${changeURI }images/ct_btng03.gif" width="4" height="21">
+									<img src="../images/ct_btng03.gif" width="4" height="21">
 								</td>
 							</tr>
 						</table>
@@ -143,24 +143,24 @@ function fncUseId() {
 				<tr>
 				<c:if test="${result }">
 					<td width="17" height="23">
-						<img src="${changeURI }images/ct_btnbg01.gif" width="17" height="23"/>
+						<img src="../images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="${changeURI }images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+					<td background="../images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<a href="javascript:fncUseId();">사용</a>
 					</td>
 					<td width="14" height="23">
-						<img src="${changeURI }images/ct_btnbg03.gif" width="14" height="23"/>
+						<img src="../images/ct_btnbg03.gif" width="14" height="23"/>
 					</td>
 				</c:if>
 					<td width="30"></td>					
 					<td width="17" height="23">
-						<img src="${changeURI }images/ct_btnbg01.gif" width="17" height="23"/>
+						<img src="../images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="${changeURI }images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+					<td background="../images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<a href="javascript:window.close();">닫기</a>
 					</td>
 					<td width="14" height="23">
-						<img src="${changeURI }images/ct_btnbg03.gif" width="14" height="23">
+						<img src="../images/ct_btnbg03.gif" width="14" height="23">
 					</td>
 				</tr>
 			</table>

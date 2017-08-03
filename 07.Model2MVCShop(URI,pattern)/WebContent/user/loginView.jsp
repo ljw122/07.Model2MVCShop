@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%-- user에서 실행 --%>
 <html>
 <head>
@@ -30,15 +31,18 @@
 	}
 -->
 </script>
+<script type="text/javascript">
+	document.loginForm.userId.focus();
+</script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000" >
 
-<form name="loginForm"  method="post" action="../login.do" target="_parent">
+<form name="loginForm"  method="post" action="login" target="_parent">
 
 <div align="center">
 
-<TABLE WITH="100%" HEIGHT="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+<TABLE WIdTH="100%" HEIGHT="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
 <TR>
 <TD ALIGN="CENTER" VALIGN="MIDDLE">
 
@@ -105,7 +109,7 @@
                             </td>
                             <td width="10">&nbsp;</td>
                             <td width="70">
-                            	<a href="../addUserView.do">
+                            	<a href="addUser">
                             		<img src="../images/btn_add.gif" width="70" height="20" border="0">
                             	</a>
                             </td>
@@ -131,6 +135,3 @@
 </body>
 </html>
 
-<script type="text/javascript">
-	document.loginForm.userId.focus();
-</script>

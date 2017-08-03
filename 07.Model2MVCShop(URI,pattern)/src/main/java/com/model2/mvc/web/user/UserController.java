@@ -44,14 +44,14 @@ public class UserController {
 	/*Field*/
 	@RequestMapping( value="addUser", method=RequestMethod.GET )
 	public String addUser() throws Exception{
-		return "redirect:user/addUserView.jsp";
+		return "redirect:addUserView.jsp";
 	}
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser(	@ModelAttribute("user") User user ) throws Exception{
 		userService.addUser(user);
 		
-		return "redirect:user/loginView.jsp";
+		return "redirect:loginView.jsp";
 	}
 	
 	@RequestMapping( value="getUser", method=RequestMethod.GET )
@@ -61,7 +61,7 @@ public class UserController {
 		
 		model.addAttribute("user", user);
 		
-		return "forward:user/getUser.jsp";
+		return "forward:getUser.jsp";
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
@@ -71,7 +71,7 @@ public class UserController {
 		
 		model.addAttribute("user", user);
 		
-		return "forward:user/updateUser.jsp";
+		return "forward:updateUser.jsp";
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
@@ -85,12 +85,12 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		return "redirect:user/getUser.do?userId="+user.getUserId();
+		return "redirect:getUser.do?userId="+user.getUserId();
 	}
 	
 	@RequestMapping( value="login", method=RequestMethod.GET )
 	public String login() throws Exception{
-		return "redirect:user/loginView.jsp";
+		return "redirect:loginView.jsp";
 	}
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
@@ -101,14 +101,14 @@ public class UserController {
 			session.setAttribute("user", dbUser);
 		}
 		
-		return "redirect:index.jsp";
+		return "redirect:../index.jsp";
 	}
 	
 	@RequestMapping( value="logout", method=RequestMethod.GET )
 	public String logout(HttpSession session) throws Exception{
 		session.invalidate();
 		
-		return "redirect:index.jsp";
+		return "redirect:../index.jsp";
 	}
 	
 	@RequestMapping( value="checkDuplication", method=RequestMethod.POST )
@@ -118,7 +118,7 @@ public class UserController {
 		model.addAttribute("result", new Boolean(result));
 		model.addAttribute("userId", userId);
 		
-		return "forward:user/checkDuplication.jsp";
+		return "forward:checkDuplication.jsp";
 	}
 	
 	@RequestMapping( value="listUser" )
@@ -137,6 +137,6 @@ public class UserController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
-		return "forward:user/listUser.jsp";
+		return "forward:listUser.jsp";
 	}
 }
