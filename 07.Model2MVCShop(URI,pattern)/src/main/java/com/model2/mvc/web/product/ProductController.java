@@ -1,19 +1,15 @@
 package com.model2.mvc.web.product;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
@@ -59,70 +56,88 @@ public class ProductController {
 	}
 	
 	@RequestMapping( value="addProduct", method=RequestMethod.POST )
-	public ModelAndView addProduct( /*@ModelAttribute("product") Product product,*/ 
-									HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView addProduct( @ModelAttribute("product") Product product,
+									@RequestParam("file") MultipartFile file,
+									HttpServletRequest request		) throws Exception{
 		
 		ModelAndView modelAndView = new ModelAndView("forward:addProduct.jsp");
-		
-		//FileUpload 추가
-		if(FileUpload.isMultipartContent(request)){
-			String temDir = 
-					"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
-			
-			DiskFileUpload fileUpload = new DiskFileUpload();
-			fileUpload.setRepositoryPath(temDir);
-			fileUpload.setSizeMax(1024*1024*1);
-			fileUpload.setSizeThreshold(1024*100);
-			
-			if(request.getContentLength() < fileUpload.getSizeMax()){
-				Product product = new Product();
-				StringTokenizer token = null;
-				
-				List<FileItem> fileItemList = fileUpload.parseRequest(request);
-				for(FileItem fileItem : fileItemList){
-					if(fileItem.isFormField()){
-						if(fileItem.getFieldName().equals("manuDate")){
-							product.setManuDate(fileItem.getString("euc-kr"));
-						} else if(fileItem.getFieldName().equals("prodName")){
-							product.setProdName(fileItem.getString("euc-kr"));
-						} else if(fileItem.getFieldName().equals("prodDetail")){
-							product.setProdDetail(fileItem.getString("euc-kr"));
-						} else if(fileItem.getFieldName().equals("price")){
-							product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
-						} else if(fileItem.getFieldName().equals("stock")){
-							product.setStock(Integer.parseInt(fileItem.getString("euc-kr")));
-						}
-					}else{
-						if(fileItem.getSize()>0){
-							int idx = fileItem.getName().lastIndexOf("\\");
-							if(idx == -1){
-								idx = fileItem.getName().lastIndexOf("/");
-							}
-							String fileName = fileItem.getName().substring(idx+1);
-							product.setFileName(fileName);
-							try{
-								File uploadedFile = new File(temDir, fileName);
-								fileItem.write(uploadedFile);
-							}catch(IOException e){
-								System.out.println(e);
-							}
-						}else{
-							product.setFileName("empty"+(int)(Math.random()*3)+".GIF");
-						}
-					}
-				}
-				productService.addProduct(product);
-				modelAndView.addObject("product", product);
-			} else{
-				int overSize = (request.getContentLength()/1000000);
-				System.out.println("<script>alert('파일의 크기는 1MB까지 입니다. 올리신 파일 용량은 "+overSize + "MB 입니다.');");
-				System.out.println("history.back();</script>");
-			}
-		}else{
-			System.out.println("인코딩 타입이 multipart/form-data가 아닙니다..");
+
+		String temDir = 
+				"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+
+//////////FileUpload 추가////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//		if(FileUpload.isMultipartContent(request)){
+//			String temDir = 
+//					"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+//			
+//			DiskFileUpload fileUpload = new DiskFileUpload();
+//			fileUpload.setRepositoryPath(temDir);
+//			fileUpload.setSizeMax(1024*1024*1);
+//			fileUpload.setSizeThreshold(1024*100);
+//			
+//			if(request.getContentLength() < fileUpload.getSizeMax()){
+//				Product product = new Product();
+//				StringTokenizer token = null;
+//				
+//				List<FileItem> fileItemList = fileUpload.parseRequest(request);
+//				for(FileItem fileItem : fileItemList){
+//					if(fileItem.isFormField()){
+//						if(fileItem.getFieldName().equals("manuDate")){
+//							product.setManuDate(fileItem.getString("euc-kr"));
+//						} else if(fileItem.getFieldName().equals("prodName")){
+//							product.setProdName(fileItem.getString("euc-kr"));
+//						} else if(fileItem.getFieldName().equals("prodDetail")){
+//							product.setProdDetail(fileItem.getString("euc-kr"));
+//						} else if(fileItem.getFieldName().equals("price")){
+//							product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
+//						} else if(fileItem.getFieldName().equals("stock")){
+//							product.setStock(Integer.parseInt(fileItem.getString("euc-kr")));
+//						}
+//					}else{
+//						if(fileItem.getSize()>0){
+//							int idx = fileItem.getName().lastIndexOf("\\");
+//							if(idx == -1){
+//								idx = fileItem.getName().lastIndexOf("/");
+//							}
+//							String fileName = fileItem.getName().substring(idx+1);
+//							product.setFileName(fileName);
+//							try{
+//								File uploadedFile = new File(temDir, fileName);
+//								fileItem.write(uploadedFile);
+//							}catch(IOException e){
+//								System.out.println(e);
+//							}
+//						}else{
+//							product.setFileName("empty"+(int)(Math.random()*3)+".GIF");
+//						}
+//					}
+//				}
+//				productService.addProduct(product);
+//				modelAndView.addObject("product", product);
+//			} else{
+//				int overSize = (request.getContentLength()/1000000);
+//				System.out.println("<script>alert('파일의 크기는 1MB까지 입니다. 올리신 파일 용량은 "+overSize + "MB 입니다.');");
+//				System.out.println("history.back();</script>");
+//			}
+//		}else{
+//			System.out.println("인코딩 타입이 multipart/form-data가 아닙니다..");
+//		}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Spring MultipartFile 이용
+//		
+//		MultipartFile file = ((MultipartHttpServletRequest)request).getFile("file");
+//		
+		product.setFileName("");
+		if(!file.isEmpty()){
+			System.out.println("\n\n\n설레여라얍\n\n\n");
+			FileOutputStream fos = new FileOutputStream(new File(temDir, file.getOriginalFilename()));
+			fos.write(file.getBytes());
+			fos.flush();
+			fos.close();
+			product.setFileName(file.getOriginalFilename());
 		}
 		
-		//productService.addProduct(product);
+		productService.addProduct(product);
 		
 		return modelAndView;
 	}
