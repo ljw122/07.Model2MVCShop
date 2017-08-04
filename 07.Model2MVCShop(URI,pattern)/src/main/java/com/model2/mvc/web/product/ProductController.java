@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +56,13 @@ public class ProductController {
 	
 	@RequestMapping( value="addProduct", method=RequestMethod.POST )
 	public ModelAndView addProduct( @ModelAttribute("product") Product product,
-									@RequestParam("file") MultipartFile file,
-									HttpServletRequest request		) throws Exception{
+									@RequestParam("file") MultipartFile file		) throws Exception{
 		
 		ModelAndView modelAndView = new ModelAndView("forward:addProduct.jsp");
 
-		String temDir = 
+		String temDir =
 				"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+				//request.getServletContext().getRealPath("images\\uploadFiles");
 
 //////////FileUpload Ãß°¡////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //		if(FileUpload.isMultipartContent(request)){
@@ -182,7 +181,17 @@ public class ProductController {
 	}
 	
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
-	public ModelAndView updateProduct(@ModelAttribute("product") Product product) throws Exception{
+	public ModelAndView updateProduct(	@ModelAttribute("product") Product product,
+										@RequestParam("file") MultipartFile file	) throws Exception{
+
+		String temDir =
+				"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+
+		if(!file.isEmpty()){
+			file.transferTo(new File(temDir, file.getOriginalFilename()));
+			product.setFileName(file.getOriginalFilename());
+		}
+		
 		productService.updateProduct(product);
 		product=productService.getProduct(product.getProdNo());
 		
