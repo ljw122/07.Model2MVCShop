@@ -2,7 +2,9 @@ package com.model2.mvc.web.user;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,8 +107,11 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="logout", method=RequestMethod.GET )
-	public String logout(HttpSession session) throws Exception{
+	public String logout(HttpSession session, HttpServletResponse response) throws Exception{
 		session.invalidate();
+		Cookie cookie = new Cookie("history", "");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
 		
 		return "redirect:../index.jsp";
 	}
