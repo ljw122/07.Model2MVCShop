@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +27,7 @@ import com.model2.mvc.service.domain.Reply;
 import com.model2.mvc.service.product.ProductService;
 
 @Controller
+@RequestMapping("product/*")
 public class ProductController {
 
 	/*Field*/
@@ -44,20 +47,19 @@ public class ProductController {
 	}
 	
 	/*Method*/
-	@RequestMapping("addProduct.do")
+	@RequestMapping( value="addProduct", method=RequestMethod.GET )
 	public ModelAndView addProduct(@ModelAttribute("product") Product product) throws Exception{
 		productService.addProduct(product);
 		
-		return new ModelAndView("forward:product/addProduct.jsp", "product", product);
+		return new ModelAndView("forward:addProduct.jsp", "product", product);
 	}
 	
-	@RequestMapping("getProduct.do")
-	public ModelAndView getProduct(	@RequestParam("prodNo") int prodNo,
-									@RequestParam("menu") String menu,
+	@RequestMapping( value="getProduct", method=RequestMethod.GET )
+	public ModelAndView getProduct(	@RequestParam("menu") String menu,
+									@RequestParam("prodNo") int prodNo,
 									@CookieValue(value="history", required=false) String history, 
-									HttpServletResponse response) 
-														throws Exception{
-
+									HttpServletResponse response	) throws Exception{
+		
 		Product product = productService.getProduct(prodNo);
 		product.setReplyList(productService.getProductCommentList(prodNo));
 		
@@ -65,7 +67,7 @@ public class ProductController {
 		modelAndView.addObject("product", product);
 		modelAndView.addObject("replyList", product.getReplyList());
 		
-		String viewName = "redirect:updateProductView.do?prodNo="+prodNo;
+		String viewName = "redirect:updateProduct?prodNo="+prodNo;
 		
 		if(menu.equals("search")){
 			String newHistory = prodNo + "";
@@ -79,9 +81,11 @@ public class ProductController {
 			}
 			history = newHistory;
 			
-			response.addCookie(new Cookie("history",history));
+			Cookie cookie = new Cookie("history",history);
+			cookie.setPath("/");
+			response.addCookie(cookie);
 			
-			viewName = "forward:product/getProduct.jsp";
+			viewName = "forward:getProduct.jsp";
 		}
 		
 		modelAndView.setViewName(viewName);
@@ -89,23 +93,24 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	@RequestMapping("updateProduct.do")
+	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
 	public ModelAndView updateProduct(@ModelAttribute("product") Product product) throws Exception{
 		productService.updateProduct(product);
+		product=productService.getProduct(product.getProdNo());
 		
-		return new ModelAndView("forward:product/getProduct.jsp?menu=manage&prodNo="+product.getProdNo());
+		return new ModelAndView("forward:getProduct.jsp?menu=manage&prodNo="+product.getProdNo(), "product", product);
 	}
 	
-	@RequestMapping("updateProductView.do")
-	public ModelAndView updateProductView( @RequestParam("prodNo") int prodNo) throws Exception{
+	@RequestMapping( value="updateProduct", method=RequestMethod.GET )
+	public ModelAndView updateProduct( @RequestParam("prodNo") int prodNo) throws Exception{
 		Product product = productService.getProduct(prodNo);
 		
-		return new ModelAndView("forward:product/updateProductView.jsp", "product", product);
+		return new ModelAndView("forward:updateProductView.jsp", "product", product);
 	}
 	
 	
 	
-	@RequestMapping("listProduct.do")
+	@RequestMapping( value="listProduct" )
 	public ModelAndView listProduct(@ModelAttribute("search") Search search, @RequestParam("menu") String menu) throws Exception{
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
@@ -134,14 +139,14 @@ public class ProductController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("forward:product/listProduct.jsp?menu="+menu);
+		modelAndView.setViewName("forward:listProduct.jsp?menu="+menu);
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping("addProductComment")
+	@RequestMapping( value="addProductComment", method=RequestMethod.POST )
 	public ModelAndView addProductComment(@ModelAttribute("product") Product product, @ModelAttribute("reply") Reply reply) throws Exception{
 		List<Reply> list = new ArrayList<Reply>();
 		
@@ -150,7 +155,7 @@ public class ProductController {
 		
 		productService.addProductComment(product);
 		
-		return new ModelAndView("getProduct.do?menu=search");
+		return new ModelAndView("redirect:getProduct?menu=search&prodNo="+product.getProdNo());
 	}
 	
 }

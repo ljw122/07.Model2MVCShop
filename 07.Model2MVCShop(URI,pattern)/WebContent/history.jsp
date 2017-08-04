@@ -12,7 +12,7 @@
 <br>
 
 <c:forTokens var="i" items="${cookie.history.value }" delims=",">
-	<a href="getProduct.do?prodNo=${i}&menu=search" target="rightFrame">${i}</a><br/>
+	<a href="product/getProduct?prodNo=${i}&menu=search" target="rightFrame">${i}</a><br/>
 </c:forTokens>
 
 </body>

@@ -9,7 +9,7 @@
 <head>
 <title>상품등록</title>
 
-<link rel="stylesheet" href="css/admin.css" type="text/css">
+<link rel="stylesheet" href="../css/admin.css" type="text/css">
 
 </head>
 
@@ -18,9 +18,9 @@
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="15" height="37">
-			<img src="images/ct_ttl_img01.gif" 	width="15" height="37"/>
+			<img src="../images/ct_ttl_img01.gif" 	width="15" height="37"/>
 		</td>
-		<td background="images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
+		<td background="../images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">상품등록</td>
@@ -29,7 +29,7 @@
 			</table>
 		</td>
 		<td width="12" height="37">
-			<img src="images/ct_ttl_img03.gif" width="12" height="37"/>
+			<img src="../images/ct_ttl_img03.gif" width="12" height="37"/>
 		</td>
 	</tr>
 </table>
@@ -40,7 +40,7 @@
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">
-			상품명<img src="images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			상품명<img src="../images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
@@ -58,7 +58,7 @@
 
 	<tr>
 		<td width="104" class="ct_write">
-			상품상세정보 <img  src="images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			상품상세정보 <img  src="../images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${product.prodDetail}</td>
@@ -78,7 +78,7 @@
 
 	<tr>
 		<td width="104" class="ct_write">
-			제조일자<img	src="images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			제조일자<img	src="../images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${product.manuDate}</td>
@@ -88,7 +88,7 @@
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">
-			가격 <img src="images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+			가격 <img src="../images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${product.price}</td>
@@ -105,7 +105,7 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td height="26">
-						<img src="images/uploadFiles/${!empty product.fileName ? product.fileName : "empty2.GIF"}"/>
+						<img src="../images/uploadFiles/${!empty product.fileName ? product.fileName : 'empty2.GIF'}"/>
 					</td>
 				</tr>
 			</table>
@@ -123,22 +123,22 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>					
 					<td width="17" height="23">
-						<img src="images/ct_btnbg01.gif" width="17" height="23"/>
+						<img src="../images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+					<td background="../images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<a href="listProduct.do?menu=manage">확인</a>
 					</td>
 					<td width="14" height="23">
-						<img src="images/ct_btnbg03.gif" width="14" height="23"/>
+						<img src="../images/ct_btnbg03.gif" width="14" height="23"/>
 					</td>
 					<td width="17" height="23">
-						<img src="images/ct_btnbg01.gif" width="17" height="23"/>
+						<img src="../images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+					<td background="../images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<a href="product/addProductView.jsp;">추가등록</a>
 					</td>
 					<td width="14" height="23">
-						<img src="images/ct_btnbg03.gif" width="14" height="23"/>
+						<img src="../images/ct_btnbg03.gif" width="14" height="23"/>
 					</td>
 				</tr>
 			</table>

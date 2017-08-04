@@ -12,7 +12,7 @@
 <head>
 <title>상품 목록조회</title>
 
-<link rel="stylesheet" href="css/admin.css" type="text/css">
+<link rel="stylesheet" href="../css/admin.css" type="text/css">
 <script type="text/javascript">
 	function fncGetList(currentPage){
 		document.getElementById("currentPage").value = currentPage;
@@ -31,14 +31,14 @@
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="listProduct.do?menu=${menu }" method="post">
+<form name="detailForm" action="listProduct?menu=${menu }" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
-			<img src="images/ct_ttl_img01.gif" width="15" height="37"/>
+			<img src="../images/ct_ttl_img01.gif" width="15" height="37"/>
 		</td>
-		<td background="images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
+		<td background="../images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">
@@ -48,7 +48,7 @@
 			</table>
 		</td>
 		<td width="12" height="37">
-			<img src="images/ct_ttl_img03.gif" width="12" height="37"/>
+			<img src="../images/ct_ttl_img03.gif" width="12" height="37"/>
 		</td>
 	</tr>
 </table>
@@ -69,13 +69,13 @@
 			</select>
 			<c:choose>
 				<c:when test="${search.searchCondition==2 }">
-					<input type="text" name="searchKeyword" value="${!empty search.searchKeyword? search.searchKeyword : "" }"
+					<input type="text" name="searchKeyword" value="${!empty search.searchKeyword? search.searchKeyword : '' }"
 							class="ct_input_g" style="width:65px; height:19px" />&nbsp;이상&nbsp;
-					<input type="text" name="searchKeyword2" value="${!empty search.searchKeyword2? search.searchKeyword2 : "" }"
+					<input type="text" name="searchKeyword2" value="${!empty search.searchKeyword2? search.searchKeyword2 : '' }"
 							class="ct_input_g" style="width:65px; height:19px" />&nbsp;이하
 				</c:when>
 				<c:otherwise>
-					<input type="text" name="searchKeyword" value="${!empty search.searchKeyword? search.searchKeyword : "" }"
+					<input type="text" name="searchKeyword" value="${!empty search.searchKeyword? search.searchKeyword : '' }"
 							class="ct_input_g" style="width:200px; height:19px" />
 				</c:otherwise>
 			</c:choose>
@@ -84,13 +84,13 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="17" height="23">
-						<img src="images/ct_btnbg01.gif" width="17" height="23">
+						<img src="../images/ct_btnbg01.gif" width="17" height="23">
 					</td>
-					<td background="images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
+					<td background="../images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<a href="javascript:fncGetList('1');">검색</a>
 					</td>
 					<td width="14" height="23">
-						<img src="images/ct_btnbg03.gif" width="14" height="23">
+						<img src="../images/ct_btnbg03.gif" width="14" height="23">
 					</td>
 				</tr>
 			</table>
@@ -106,8 +106,8 @@
 	<tr>
 		<td class="ct_list_b" width="70">No</td>
 		<td class="ct_line02">
-			<input type="hidden" id="orderCondition" name="orderCondition" value="${!empty search.orderCondition? search.orderCondition : "" }"/>
-			<input type="hidden" id="orderOption" name="orderOption" value="${!empty search.orderOption? search.orderOption : "" }"/>
+			<input type="hidden" id="orderCondition" name="orderCondition" value="${!empty search.orderCondition? search.orderCondition : '' }"/>
+			<input type="hidden" id="orderOption" name="orderOption" value="${!empty search.orderOption? search.orderOption : '' }"/>
 		</td>
 		<td class="ct_list_b" width="150">상품명&nbsp;
 			<a href="javascript:fncOrderList('1', '${search.orderCondition=='1' && search.orderOption=='ASC' ? 'DESC' : 'ASC' }')">
@@ -141,7 +141,7 @@
 			<td align="left">
 				<c:choose>
 					<c:when test="${empty product.proTranCode || menu=='manage' }">
-						<a href="getProduct.do?prodNo=${product.prodNo }&menu=${menu}">${product.prodName}</a>
+						<a href="getProduct?menu=${menu}&prodNo=${product.prodNo }">${product.prodName}</a>
 					</c:when>
 					<c:otherwise>
 						${product.prodName }
