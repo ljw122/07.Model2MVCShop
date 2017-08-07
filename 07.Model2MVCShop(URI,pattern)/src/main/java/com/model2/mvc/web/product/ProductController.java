@@ -42,6 +42,11 @@ public class ProductController {
 	
 	@Value("#{commonProperties['pageSize'] ?: 3}")
 	int pageSize;
+
+	String temDir =
+			"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+			//request.getServletContext().getRealPath("images\\uploadFiles");
+
 	
 	/*Constructor*/
 	public ProductController(){
@@ -60,9 +65,6 @@ public class ProductController {
 		
 		ModelAndView modelAndView = new ModelAndView("forward:addProduct.jsp");
 
-		String temDir =
-				"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
-				//request.getServletContext().getRealPath("images\\uploadFiles");
 
 //////////FileUpload 추가////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //		if(FileUpload.isMultipartContent(request)){
@@ -128,7 +130,6 @@ public class ProductController {
 //		
 		product.setFileName("");
 		if(!file.isEmpty()){
-			System.out.println("\n\n\n설레여라얍\n\n\n");
 			FileOutputStream fos = new FileOutputStream(new File(temDir, file.getOriginalFilename()));
 			fos.write(file.getBytes());
 			fos.flush();
@@ -184,8 +185,6 @@ public class ProductController {
 	public ModelAndView updateProduct(	@ModelAttribute("product") Product product,
 										@RequestParam("file") MultipartFile file	) throws Exception{
 
-		String temDir =
-				"C:\\Users\\ljw12\\git\\07.Model2MVCShop\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
 
 		if(!file.isEmpty()){
 			file.transferTo(new File(temDir, file.getOriginalFilename()));
