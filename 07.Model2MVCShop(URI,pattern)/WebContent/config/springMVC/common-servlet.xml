@@ -55,5 +55,12 @@
 		<property name="maxUploadSize" value="1000000"/>
 		<property name="uploadTempDir" value="images/uploadFiles/"/>
 	</bean>
+	
+	<bean id="uploadFilePath"
+				class="org.springframework.core.io.FileSystemResource">
+		<constructor-arg>
+			<value>images/uploadFiles/</value>
+		</constructor-arg>
+	</bean>
 
 </beans>
